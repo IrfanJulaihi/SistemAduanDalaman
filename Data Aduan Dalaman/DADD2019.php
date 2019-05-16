@@ -41,24 +41,28 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
   $insertSQL = sprintf("INSERT INTO aduan (
   NoRujukan,
   Category,
+  SubCategory,
   MaklumatAduan,
   KawasanAduan,
-  BahagianAduan,
   SaluranAduan,
   StatusAduan,
   NamaPengadu,
   UsernamePengadu,
   NamaAkaunPengadu,
-  TimeSubmit) VALUES  (%s,%s,%s,%s,%s,%s,'Pending',%s,%s,%s,now())",
+  NoTelefon,
+  PIC,
+  TimeSubmit) VALUES  (%s,%s,%s,%s,%s,%s,'Pending',%s,%s,%s,%s,%s,now())",
                       GetSQLValueString($_POST['NoRujukan'], "text"),
                        GetSQLValueString($_POST['kategoriAduan'], "text"),
+					   GetSQLValueString($_POST['SubKategoriDirujuk'], "text"),
 					   GetSQLValueString($_POST['MaklumatAduan'], "text"),
                        GetSQLValueString($_POST['kawasanAduan'], "text"),
-					   GetSQLValueString($_POST['BahagianDirujuk'], "text"),
 					   GetSQLValueString($_POST['SaluranAduan'], "text"),
 					    GetSQLValueString($_POST['NamaPengadu'], "text"),
 					   GetSQLValueString($_POST['UsernamePengadu'], "text"),	   
-					   GetSQLValueString($_POST['NamaAkaunPengadu'], "text")	
+					   GetSQLValueString($_POST['NamaAkaunPengadu'], "text"),
+					   GetSQLValueString($_POST['NoTelefon'], "text"),	
+					   GetSQLValueString($_POST['Personincharge'], "text")
 					   );
 					   
 					   //Note!! To delete aduan the tindakan dirujuk also need to be deleted or else duplicate entry error will appear
@@ -203,14 +207,15 @@ $row_subkategori16 = mysql_fetch_assoc($subkategori16);
 
 //Sql to merge kategori with PIC
 mysql_select_db($database_Connection1, $Connection1);
-$query_KategoriMatchPIC = "SELECT DepartmentName,Username FROM kategoriaduan 
-INNER JOIN
- useraccount ON useraccount.ID=kategoriaduan.IDKategoriAduan
-  INNER JOIN 
-  Department.DepartmentID=useraccount.DepartmentID
+$query_KategoriMatchPIC = "SELECT Abbreviation,Name FROM kategoriaduan INNER JOIN useraccount ON useraccount.ID=kategoriaduan.PIC INNER JOIN department ON department.DepartmentID=useraccount.DepartmentID 
   ";
-$subkategori16 = mysql_query($query_subkategori16, $Connection1) or die(mysql_error());
-$row_subkategori16 = mysql_fetch_assoc($subkategori16);
+$KategoriMatchPIC = mysql_query($query_KategoriMatchPIC, $Connection1) or die(mysql_error());
+$row_KategoriMatchPIC = mysql_fetch_assoc($KategoriMatchPIC);
+
+$KategoriMatchPersonInCharge;
+
+
+
 //Testing third time commit
 
 
@@ -608,6 +613,7 @@ function showSubkategori(){
   
 
 if (k == 1) {
+	 document.getElementById("Personincharge").value = '5';
     k1.style.display = "block";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -624,10 +630,11 @@ if (k == 1) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
-	
+   
 
 	
   } else if (k==2) {
+	  document.getElementById("Personincharge").value = '5';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	k2.style.display = "block";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -645,7 +652,9 @@ if (k == 1) {
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
 	
+	
  } else if (k==3) {
+	  document.getElementById("Personincharge").value = '5';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	k3.style.display = "block";
@@ -662,12 +671,17 @@ if (k == 1) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
+   
+		
+		
+		
+		
 }else if (k==4) {
+	document.getElementById("Personincharge").value = '7';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
 	k4.style.display = "block";
-
 	document.getElementById("SubKategoriDirujuk5").style.display="none";
 	document.getElementById("SubKategoriDirujuk6").style.display="none";
 	document.getElementById("SubKategoriDirujuk7").style.display="none";
@@ -680,14 +694,14 @@ if (k == 1) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	document.getElementById("BahagianDirujuks").value = "ENV";
 }else if (k==5) {
+	document.getElementById("Personincharge").value = '7';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
 	document.getElementById("SubKategoriDirujuk4").style.display="none";
 	k5.style.display = "block";
-	
 	document.getElementById("SubKategoriDirujuk6").style.display="none";
 	document.getElementById("SubKategoriDirujuk7").style.display="none";
 	document.getElementById("SubKategoriDirujuk8").style.display="none";
@@ -699,8 +713,10 @@ if (k == 1) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
+   
 }
 else if (k==6) {
+	document.getElementById("Personincharge").value = '7';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -717,8 +733,10 @@ else if (k==6) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	
 	}
 else if (k==7) {
+	document.getElementById("Personincharge").value = '8';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -736,7 +754,9 @@ else if (k==7) {
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
 	
+	
 }else if (k==8) {
+	document.getElementById("Personincharge").value = '9';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -753,7 +773,9 @@ else if (k==7) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	
 	}else if (k==9) {
+		document.getElementById("Personincharge").value = '10';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -770,7 +792,9 @@ else if (k==7) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	
 	}else if (k==10) {
+	document.getElementById("Personincharge").value = '11';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -787,7 +811,9 @@ else if (k==7) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	
 	}else if (k==11) {
+		document.getElementById("Personincharge").value = '12';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -804,7 +830,9 @@ else if (k==7) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	
 	}else if (k==12) {
+		document.getElementById("Personincharge").value = '9';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -821,7 +849,9 @@ else if (k==7) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	
 	}else if (k==13) {
+		document.getElementById("Personincharge").value = '13';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -838,7 +868,9 @@ else if (k==7) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	
 	}else if (k==14) {
+		document.getElementById("Personincharge").value = '14';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -855,7 +887,9 @@ else if (k==7) {
 	k14.style.display = "block";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	
 	}else if (k==15) {
+		document.getElementById("Personincharge").value = '14';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -872,7 +906,9 @@ else if (k==7) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	k15.style.display = "block";
 	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	
 	}else if (k==16) {
+		document.getElementById("Personincharge").value = '15';
 	document.getElementById("SubKategoriDirujuk1").style.display="none";
 	document.getElementById("SubKategoriDirujuk2").style.display="none";
 	document.getElementById("SubKategoriDirujuk3").style.display="none";
@@ -889,6 +925,7 @@ else if (k==7) {
 	document.getElementById("SubKategoriDirujuk14").style.display="none";
 	document.getElementById("SubKategoriDirujuk15").style.display="none";
 	k16.style.display = "block";
+	
 	}}
 
 function CalculateDate(){
@@ -1004,7 +1041,7 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
  </tr>
  <tr>
     <td><label>No telefon(Jika ada)</label></td>
-    <td style="padding:10px;"><input type="No" name="NoTelefon" id="NoTelefon"  style="width:100%" required></td>
+    <td style="padding:10px;"><input type="text" name="NoTelefon" id="NoTelefon"  style="width:100%" required></td>
  </tr>
     <tr >
       <td><label>Kategori</label></td>
@@ -1026,88 +1063,88 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
     </tr>
     <tr>
     <td>Jenis:
-    <td align="center" style="padding:10px"><select name="SubKategoriDirujuk1" id="SubKategoriDirujuk1" style="width:100%">
+    <td align="center" style="padding:10px"><select name="SubKategoriDirujuk" id="SubKategoriDirujuk1" style="width:100%">
                       <?php do { ?>
               <option value=<?php echo $row_subkategori1['ID']; ?>><?php echo $row_subkategori1['NamaSub']; ?> </option>
               <?php } while($row_subkategori1 = mysql_fetch_assoc($subkategori1)); ?></select>
               
-              
-             <select name="SubKategoriDirujuk2" id="SubKategoriDirujuk2" style="display:none">
+             
+             <select name="SubKategoriDirujuk" id="SubKategoriDirujuk2" style="display:none;width:100%">
               <?php do { ?>
               <option value=<?php echo $row_subkategori2['ID']; ?>><?php echo $row_subkategori2['NamaSub']; ?> </option>
               <?php } while($row_subkategori2 = mysql_fetch_assoc($subkategori2)); ?></select>
               
-               <select name="SubKategoriDirujuk3" id="SubKategoriDirujuk3" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk3" style="display:none;width:100%">
                 <?php do { ?>
               <option value=<?php echo $row_subkategori3['ID']; ?>><?php echo $row_subkategori3['NamaSub']; ?> </option>
               <?php } while($row_subkategori3 = mysql_fetch_assoc($subkategori3)); ?></select>
               
-               <select name="SubKategoriDirujuk4" id="SubKategoriDirujuk4" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk4" style="display:none;width:100%">
                 <?php do { ?>
               <option value=<?php echo $row_subkategori4['ID']; ?>><?php echo $row_subkategori4['NamaSub']; ?> </option>
               <?php } while($row_subkategori4 = mysql_fetch_assoc($subkategori4)); ?></select>
               
-               <select name="SubKategoriDirujuk5" id="SubKategoriDirujuk5" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk5" style="display:none;width:100%">
                 <?php do { ?>
               <option value=<?php echo $row_subkategori5['ID']; ?>><?php echo $row_subkategori5['NamaSub']; ?> </option>
               <?php } while($row_subkategori5 = mysql_fetch_assoc($subkategori5)); ?></select>
               
               
-               <select name="SubKategoriDirujuk6" id="SubKategoriDirujuk6" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk6" style="display:none;width:100%">
                 <?php do { ?>
               <option value=<?php echo $row_subkategori6['ID']; ?>><?php echo $row_subkategori6['NamaSub']; ?> </option>
               <?php } while($row_subkategori6 = mysql_fetch_assoc($subkategori6)); ?></select>
               
-               <select name="SubKategoriDirujuk7" id="SubKategoriDirujuk7" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk7" style="display:none;width:100%">
                <?php do { ?>
               <option value=<?php echo $row_subkategori7['ID']; ?>><?php echo $row_subkategori7['NamaSub']; ?> </option>
               <?php } while($row_subkategori7 = mysql_fetch_assoc($subkategori7)); ?></select>
               
-               <select name="SubKategoriDirujuk8" id="SubKategoriDirujuk8" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk8" style="display:none;width:100%">
                 <?php do { ?>
               <option value=<?php echo $row_subkategori8['ID']; ?>><?php echo $row_subkategori8['NamaSub']; ?> </option>
               <?php } while($row_subkategori8 = mysql_fetch_assoc($subkategori8)); ?></select>
               
-               <select name="SubKategoriDirujuk9" id="SubKategoriDirujuk9" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk9" style="display:none;width:100%">
                 <?php do { ?>
               <option value=<?php echo $row_subkategori9['ID']; ?>><?php echo $row_subkategori9['NamaSub']; ?> </option>
               <?php } while($row_subkategori9 = mysql_fetch_assoc($subkategori9)); ?></select>
               
-               <select name="SubKategoriDirujuk10" id="SubKategoriDirujuk10" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk10" style="display:none;width:100%">
                   <?php do { ?>
               <option value=<?php echo $row_subkategori10['ID']; ?>><?php echo $row_subkategori10['NamaSub']; ?> </option>
               <?php } while($row_subkategori10 = mysql_fetch_assoc($subkategori10)); ?></select>
               
-               <select name="SubKategoriDirujuk11" id="SubKategoriDirujuk11" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk11" style="display:none;width:100%">
                   <?php do { ?>
               <option value=<?php echo $row_subkategori11['ID']; ?>><?php echo $row_subkategori11['NamaSub']; ?> </option>
               <?php } while($row_subkategori11 = mysql_fetch_assoc($subkategori11)); ?></select>
               
-               <select name="SubKategoriDirujuk12" id="SubKategoriDirujuk12" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk12" style="display:none;width:100%">
                  <?php do { ?>
               <option value=<?php echo $row_subkategori12['ID']; ?>><?php echo $row_subkategori12['NamaSub']; ?> </option>
               <?php } while($row_subkategori12 = mysql_fetch_assoc($subkategori12)); ?></select>
               
-               <select name="SubKategoriDirujuk13" id="SubKategoriDirujuk13" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk13" style="display:none;width:100%">
                <?php do { ?>
               <option value=<?php echo $row_subkategori13['ID']; ?>><?php echo $row_subkategori13['NamaSub']; ?> </option>
               <?php } while($row_subkategori13 = mysql_fetch_assoc($subkategori13)); ?></select>
               
-               <select name="SubKategoriDirujuk14" id="SubKategoriDirujuk14" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk14" style="display:none;width:100%">
                  <?php do { ?>
               <option value=<?php echo $row_subkategori14['ID']; ?>><?php echo $row_subkategori14['NamaSub']; ?> </option>
               <?php } while($row_subkategori14 = mysql_fetch_assoc($subkategori14)); ?></select>
              
-               <select name="SubKategoriDirujuk15" id="SubKategoriDirujuk15" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk15" style="display:none;width:100%">
                <?php do { ?>
               <option value=<?php echo $row_subkategori15['ID']; ?>><?php echo $row_subkategori15['NamaSub']; ?> </option>
               <?php } while($row_subkategori15 = mysql_fetch_assoc($subkategori15)); ?></select>
               
-               <select name="SubKategoriDirujuk16" id="SubKategoriDirujuk16" style="display:none">
+               <select name="SubKategoriDirujuk" id="SubKategoriDirujuk16" style="display:none;width:100%">
                <?php do { ?>
               <option value=<?php echo $row_subkategori16['ID']; ?>><?php echo $row_subkategori16['NamaSub']; ?> </option>
               <?php } while($row_subkategori16 = mysql_fetch_assoc($subkategori16)); ?></select>
-              
+               
               </td>
    
     <tr >
@@ -1132,7 +1169,6 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
             <!--     <td><form action="upload.php" method="post" enctype="multipart/form-data">
     <input type="file" name="button" id="button" value="Find Record" class="button">-->
    
-</form>
 </tr>
     <tr >
       <td><label>Kawasan Aduan:</label></td>
@@ -1144,23 +1180,23 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
         
         
         
-        <select name="kawasanAduan2" id="kawasanAduan2" style="display:none">
+        <select name="kawasanAduan" id="kawasanAduan2" style="display:none">
                       <?php do { ?>
     <option value="<?php echo $row_DunKawasan2['NamaKawasan']; ?>"><?php echo $row_DunKawasan2['NamaKawasan']; ?></option>
               <?php } while ($row_DunKawasan2 = mysql_fetch_assoc($DunKawasan2)); ?>             
         </select>
         
-          <select name="kawasanAduan3" id="kawasanAduan3" style="display:none">
+          <select name="kawasanAduan" id="kawasanAduan3" style="display:none">
                       <?php do { ?>
     <option value="<?php echo $row_DunKawasan3['NamaKawasan']; ?>"><?php echo $row_DunKawasan3['NamaKawasan']; ?></option>
               <?php } while ($row_DunKawasan3 = mysql_fetch_assoc($DunKawasan3)); ?>             
         </select>
-          <select name="kawasanAduan4" id="kawasanAduan4" style="display:none">
+          <select name="kawasanAduan" id="kawasanAduan4" style="display:none">
                       <?php do { ?>
     <option value="<?php echo $row_DunKawasan4['NamaKawasan']; ?>"><?php echo $row_DunKawasan4['NamaKawasan']; ?></option>
               <?php } while ($row_DunKawasan4 = mysql_fetch_assoc($DunKawasan4)); ?>             
         </select>
-          <select name="kawasanAduan5" id="kawasanAduan5" style="display:none">
+          <select name="kawasanAduan" id="kawasanAduan5" style="display:none">
                       <?php do { ?>
     <option value="<?php echo $row_DunKawasan5['NamaKawasan']; ?>"><?php echo $row_DunKawasan5['NamaKawasan']; ?></option>
               <?php } while ($row_DunKawasan5 = mysql_fetch_assoc($DunKawasan5)); ?>             
@@ -1218,6 +1254,8 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
 
   <input type="hidden" name="UsernamePengadu" value="<?php echo $row_Recordset1['Username']; ?>">
   <input type="hidden" name="NamaAkaunPengadu" value="<?php echo $row_Recordset1['Name']; ?>">
+<input type="hidden" name="Personincharge" id="Personincharge" value="5">
+
 </table>
 </form>	
 

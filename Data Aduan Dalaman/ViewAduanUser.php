@@ -131,14 +131,11 @@ $totalRows_UserAccount = mysql_num_rows($UserAccount);
 $_SESSION['Name']=$row_UserAccount['Name'];
 
 mysql_select_db($database_Connection1, $Connection1);
-$query_ViewAduan = sprintf("SELECT * from aduan WHERE BahagianAduan = %s", GetSQLValueString($row_UserAccount['Abbreviation'], "text"));
+$query_ViewAduan = sprintf("SELECT * from aduan WHERE PIC = %s", GetSQLValueString($row_UserAccount['ID'], "text"));
 $ViewAduan = mysql_query($query_ViewAduan, $Connection1) or die(mysql_error());
 $row_ViewAduan = mysql_fetch_assoc($ViewAduan);
-$totalRows_ViewAduan = mysql_num_rows($ViewAduan);
-
-
-
-
+//Variable to show if they are any records for the person in charge
+$totalRows = mysql_num_rows($ViewAduan);
 
 //SQL to merge pegawai aduan
 $query_MergePegawaiAduan=sprintf("SELECT PegawaiDirujuk from tindakandirujuk 
@@ -147,6 +144,17 @@ ON aduan.NoRujukan = tindakandirujuk.NoRujukan where PegawaiDirujuk=%s", GetSQLV
 $Recordset3= mysql_query($query_MergePegawaiAduan, $Connection1) or die(mysql_error());
 $row_Recordset3 = mysql_fetch_assoc($Recordset3);
 $totalRows_Recordset1 = mysql_num_rows($Recordset3);
+
+//SQL to merge kategori aduan
+$query_MergekategoriAduan=sprintf("SELECT * from kategoriaduan
+INNER JOIN aduan
+ON aduan.Category = kategoriaduan.IDKategoriAduan where category=%s",GetSQLValueString($row_ViewAduan['Category'],"text"));
+$KategoriAduan= mysql_query($query_MergekategoriAduan, $Connection1) or die(mysql_error());
+$row_kategoriAduan = mysql_fetch_assoc($KategoriAduan);
+
+
+
+
 
 
 ?>
@@ -166,7 +174,7 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset3);
 </head>
 
 
-</script>
+
      <script>
 function myFunction() {
   var x = document.getElementById("myTopnav");
@@ -175,9 +183,9 @@ function myFunction() {
   } else {
     x.className = "topnav";
   }
-}
-</script>
-<body>
+  </script>
+ 
+<body onload="showRecords()">
 <div class="w3-container">
 
 
@@ -218,16 +226,17 @@ function myFunction() {
   
     <div align="center">
 
-        <table id="fresh-table" class="table">
+        <table id="fresh-table" class="table" >
     <thead style="color:green;">
  
       <th data-field="No">No.</th>
       <th data-field="NoRujukan">No Rujukan</th>
       <th  data-field="Kategori Aduan">Kategori Aduan</th>
+      <th data-field="Jenis Aduan">Sub-Kategori Aduan</th>
       <th data-field="Kawasan Aduan<">Kawasan Aduan</th>
       <th data-field="Maklumat Aduan">Maklumat Aduan</th>
-      <th data-field="Jenis Aduan">Jenis Aduan</th>
-      <th data-field="Pegawai Dirujuk">Pegawai Dirujuk</th>
+      
+      
       <th data-field="Status Aduan">Status Aduan</th>
       <th data-field="Masa Aduan">Masa Aduan</th>
 
@@ -242,11 +251,12 @@ function myFunction() {
     <td> <?php echo $no++; ?></td>
       <td> <a href="ViewCase.php?NoRujukan=<?php echo $row_ViewAduan['NoRujukan'];?>"><?php echo $row_ViewAduan['NoRujukan'];?></a></td>
       
-        <td><?php echo $row_ViewAduan['Category']; ?></td>
+        <td><?php echo $row_kategoriAduan['NamaAduan']; ?></td>
+        <td></td>
         <td><?php echo $row_ViewAduan['KawasanAduan']; ?></td>
         <td><?php echo $row_ViewAduan['MaklumatAduan']; ?></td>
-        <td><?php echo $row_ViewAduan['JenisAduan']; ?></td>
-        <td><?php echo $row_ViewAduan['PegawaiDirujuk']; ?></td>
+        
+      
         <td><?php echo $row_ViewAduan['StatusAduan']; ?></td>
         <td><?php echo $row_ViewAduan['TimeSubmit']; ?></td>
         
@@ -255,6 +265,7 @@ function myFunction() {
     <?php } while ($row_ViewAduan = mysql_fetch_assoc($ViewAduan)); ?>
     </tbody>
   </table>
+  <h3 id="showRecords" style="display:none">There are no records to show</h3>
  </div>
 
 <script type="text/javascript">
@@ -328,7 +339,17 @@ function myFunction() {
         };
 
     </script>
-
+<script>
+ function showRecords()
+ {
+	 var records="<?php echo $totalRows ?>";
+	 
+	 if(records=='0'){
+		 document.getElementById("fresh-table").style.display="none";
+		 document.getElementById("showRecords").style.display="block"
+ }
+ }
+</script>
 
 </body>
 </html>

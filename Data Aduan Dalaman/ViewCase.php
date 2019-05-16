@@ -60,6 +60,9 @@ $query_UserAccount = sprintf("SELECT * FROM useraccount WHERE Username = %s", Ge
 $UserAccount = mysql_query($query_UserAccount, $Connection1) or die(mysql_error());
 $row_UserAccount = mysql_fetch_assoc($UserAccount);
 $totalRows_UserAccount = mysql_num_rows($UserAccount);
+
+
+
 //Variable to route it to the pegawai bertanggugjawab
 $_SESSION['Name']=$row_UserAccount['Name'];
 
@@ -71,7 +74,24 @@ $Recordset3= mysql_query($query_MergePegawaiAduan, $Connection1) or die(mysql_er
 $row_Recordset3 = mysql_fetch_assoc($Recordset3);
 $totalRows_Recordset1 = mysql_num_rows($Recordset3);
 
+mysql_select_db($database_Connection1, $Connection1);
+$query_ViewAduan = sprintf("SELECT * from aduan WHERE PIC = %s", GetSQLValueString($row_UserAccount['ID'], "text"));
+$ViewAduan = mysql_query($query_ViewAduan, $Connection1) or die(mysql_error());
+$row_ViewAduan = mysql_fetch_assoc($ViewAduan);
+//Variable to show if they are any records for the person in charge
+$totalRows = mysql_num_rows($ViewAduan);
+//SQL to merge kategori aduan
+$query_MergekategoriAduan=sprintf("SELECT * from aduan INNER JOIN kategoriaduan ON kategoriaduan.IDKategoriAduan = aduan.Category where NoRujukan=%s",GetSQLValueString($colname_ViewCase,"text"));
+$KategoriAduan= mysql_query($query_MergekategoriAduan, $Connection1) or die(mysql_error());
+$row_kategoriAduan = mysql_fetch_assoc($KategoriAduan);
 
+
+//SQL to merge sub-kategori aduan
+$query_MergeSubkategoriAduan=sprintf("SELECT * from aduan
+INNER JOIN subkategoriaduan
+ON subkategoriaduan.ID=aduan.SubCategory where NoRujukan=%s",GetSQLValueString($colname_ViewCase,"text"));
+$SubKategoriAduan= mysql_query($query_MergeSubkategoriAduan, $Connection1) or die(mysql_error());
+$row_SubkategoriAduan = mysql_fetch_assoc($SubKategoriAduan);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -119,8 +139,8 @@ mysql_free_result($ViewCase);
   </tr>
   <tr>
 	  
-	<td>Bahagian Aduan Dirujuk </td>
-    <td style="color: #4E4E4E"><?php echo $row_ViewCase['BahagianAduan'] ?></td>
+	<td>No telefon </td>
+    <td style="color: #4E4E4E"><?php echo $row_ViewCase['NoTelefon'] ?></td>
   
   </tr>
 	<thead>
@@ -139,13 +159,13 @@ mysql_free_result($ViewCase);
   <tr>
    
 	  <td>Kategori Aduan </td>
-    <td style="color: #4E4E4E"><?php echo $row_ViewCase['Category'] ?></td>
+    <td style="color: #4E4E4E"><?php echo $row_kategoriAduan['NamaAduan'] ?></td>
 	  
   </tr>
   <tr>
 	  
-	  <td>Jenis Aduan </td>
-    <td style="color: #4E4E4E"><?php echo $row_ViewCase['JenisAduan'] ?></td>
+	  <td>Sub Kategori Aduan </td>
+    <td style="color: #4E4E4E"><?php echo $row_SubkategoriAduan['NamaSub']?></td>
 	  
   </tr>
    <tr>
