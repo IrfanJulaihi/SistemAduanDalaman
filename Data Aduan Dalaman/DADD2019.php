@@ -1500,6 +1500,9 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
      
     
     </tr>
+  <tr>
+  <td>Alamat:
+  <td>
    <tr >
       <td><label>Maklumat:</label></td>
       <td ><textarea rows="8" cols="50" name="MaklumatAduan" id="MaklumatAduan" ></textarea> </td>
@@ -1515,6 +1518,7 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
       
       </td>
     </tr>
+  
   
     <tr >
       <td><label>Saluran</label></td>
