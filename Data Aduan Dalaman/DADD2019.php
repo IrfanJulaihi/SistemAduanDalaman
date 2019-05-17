@@ -48,19 +48,17 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
   StatusAduan,
   NamaPengadu,
   UsernamePengadu,
-  NamaAkaunPengadu,
   NoTelefon,
   PIC,
-  TimeSubmit) VALUES  (%s,%s,%s,%s,%s,%s,'Pending',%s,%s,%s,%s,%s,now())",
-                      GetSQLValueString($_POST['NoRujukan'], "text"),
+  TimeSubmit) VALUES  (%s,%s,%s,%s,%s,%s,'Pending',%s,%s,%s,%s,now())",
+                       GetSQLValueString($_POST['NoRujukan'], "text"),
                        GetSQLValueString($_POST['kategoriAduan'], "text"),
 					   GetSQLValueString($_POST['SubKategoriDirujuk'], "text"),
 					   GetSQLValueString($_POST['MaklumatAduan'], "text"),
                        GetSQLValueString($_POST['kawasanAduan'], "text"),
 					   GetSQLValueString($_POST['SaluranAduan'], "text"),
-					    GetSQLValueString($_POST['NamaPengadu'], "text"),
+					   GetSQLValueString($_POST['NamaPengadu'], "text"),
 					   GetSQLValueString($_POST['UsernamePengadu'], "text"),	   
-					   GetSQLValueString($_POST['NamaAkaunPengadu'], "text"),
 					   GetSQLValueString($_POST['NoTelefon'], "text"),	
 					   GetSQLValueString($_POST['Personincharge'], "text")
 					   );
@@ -388,11 +386,11 @@ $row_RecordsetAduan = mysql_fetch_assoc($RecordsetAduan);
 $tableid=mysql_num_rows($RecordsetAduan)+1;
 
 
-mysql_select_db($database_Connection1, $Connection1);
+/*mysql_select_db($database_Connection1, $Connection1);
 $query_jenisaduan = "SELECT * FROM jenisaduan";
 $RecordsetJenisAduan = mysql_query($query_jenisaduan, $Connection1) or die(mysql_error());
 $row_JenisAduan = mysql_fetch_assoc($RecordsetJenisAduan);
-$totalRows_JenisAduan = mysql_num_rows($RecordsetJenisAduan);
+$totalRows_JenisAduan = mysql_num_rows($RecordsetJenisAduan);*/
 //Query to display all the jabatan
 mysql_select_db($database_Connection1, $Connection1);
 $query_Jabatan = "SELECT * FROM jabatan";
@@ -485,41 +483,67 @@ function showKawasan() {
 
   
 if (y == 1) {
+	 document.getElementById("kawasanAduan1").removeAttribute('disabled');
     y1.style.display = "block";
-  document.getElementById("kawasanAduan2").style.display="none";
-  document.getElementById("kawasanAduan3").style.display="none";
-  document.getElementById("kawasanAduan4").style.display="none";
-  document.getElementById("kawasanAduan5").style.display="none";
+	document.getElementById("kawasanAduan2").disabled=true;
+	y2.style.display="none";
+	document.getElementById("kawasanAduan3").disabled=true;
+    y3.style.display="none";
+	document.getElementById("kawasanAduan4").disabled=true;
+	y4.style.display="none";
+    document.getElementById("kawasanAduan5").disabled=true;
+	y5.style.display="none";
 
 
   
   } else if (y==2) {
-  document.getElementById("kawasanAduan1").style.display="none";
+  document.getElementById("kawasanAduan1").disabled=true;
+  y1.style.display="none";
+  document.getElementById("kawasanAduan2").removeAttribute('disabled');
   y2.style.display = "block";
-    document.getElementById("kawasanAduan3").style.display="none";
-  document.getElementById("kawasanAduan4").style.display="none";
-  document.getElementById("kawasanAduan5").style.display="none";
+  document.getElementById("kawasanAduan3").disabled=true;
+  y3.style.display="none";
+  document.getElementById("kawasanAduan4").disabled=true;
+  y4.style.display="none";
+  document.getElementById("kawasanAduan5").disabled=true;
+  y5.style.display="none";
+  
 
  }  else if (y==3) {
-    document.getElementById("kawasanAduan1").style.display="none";
-      document.getElementById("kawasanAduan2").style.display="none";
-  y3.style.display = "block";
-  document.getElementById("kawasanAduan4").style.display="none";
-  document.getElementById("kawasanAduan5").style.display="none";
-  
+   document.getElementById("kawasanAduan1").disabled=true;
+   y1.style.display="none";
+   document.getElementById("kawasanAduan2").disabled=true;
+   y2.style.display="none";
+   document.getElementById("kawasanAduan3").removeAttribute('disabled');
+   y3.style.display = "block";
+   document.getElementById("kawasanAduan4").disabled=true;
+   y4.style.display="none";
+   document.getElementById("kawasanAduan5").disabled=true;
+   y5.style.display="none";
   
  }else if (y==4) {
-    document.getElementById("kawasanAduan1").style.display="none";
-      document.getElementById("kawasanAduan2").style.display="none";
- document.getElementById("kawasanAduan3").style.display="none";
+   document.getElementById("kawasanAduan1").disabled=true;
+   y1.style.display="none";
+   document.getElementById("kawasanAduan2").disabled=true;
+    y2.style.display="none";
+   document.getElementById("kawasanAduan3").disabled=true;
+    y3.style.display = "none";
+  document.getElementById("kawasanAduan4").removeAttribute('disabled');
   y4.style.display = "block";
-  document.getElementById("kawasanAduan5").style.display="none";
+   document.getElementById("kawasanAduan5").disabled=true;
+   y5.style.display="none";
 }else if (y==5) {
-    document.getElementById("kawasanAduan1").style.display="none";
-      document.getElementById("kawasanAduan2").style.display="none";
- document.getElementById("kawasanAduan3").style.display="none";
-   document.getElementById("kawasanAduan4").style.display="none";
-   y5.style.display = "block";
+	
+  document.getElementById("kawasanAduan1").disabled=true;
+   y1.style.display="none";
+   document.getElementById("kawasanAduan2").disabled=true;
+    y2.style.display="none";
+   document.getElementById("kawasanAduan3").disabled=true;
+    y3.style.display = "none";
+   document.getElementById("kawasanAduan4").disabled=true;
+   y4.style.display="none";
+ document.getElementById("kawasanAduan5").removeAttribute('disabled');
+  y5.style.display = "block";
 }
 }
 
@@ -613,319 +637,586 @@ function showSubkategori(){
   
 
 if (k == 1) {
-	 document.getElementById("Personincharge").value = '5';
-    k1.style.display = "block";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
-   
+	document.getElementById("SubKategoriDirujuk1").removeAttribute('disabled');
+	k1.style.display="block";
+	document.getElementById("Personincharge").value = '5';
+    k2.style.display="none";
+	document.getElementById("SubKategoriDirujuk2").disabled=true;
+	k3.style.display="none";
+	document.getElementById("SubKategoriDirujuk3").disabled=true;
+	k4.style.display="none";
+	document.getElementById("SubKategoriDirujuk4").disabled=true;
+	k5.style.display="none";
+	document.getElementById("SubKategoriDirujuk5").disabled=true;
+	k6.style.display="none";
+	document.getElementById("SubKategoriDirujuk6").disabled=true;
+	k7.style.display="none";
+	document.getElementById("SubKategoriDirujuk7").disabled=true;
+	k8.style.display="none";
+	document.getElementById("SubKategoriDirujuk8").disabled=true;
+	k9.style.display="none";
+	document.getElementById("SubKategoriDirujuk9").disabled=true;
+	k10.style.display="none";
+	document.getElementById("SubKategoriDirujuk10").disabled=true;
+	k11.style.display="none";
+	document.getElementById("SubKategoriDirujuk11").disabled=true;
+	k12.style.display="none";
+	document.getElementById("SubKategoriDirujuk12").disabled=true;
+	k13.style.display="none";
+	document.getElementById("SubKategoriDirujuk13").disabled=true;
+	k14.style.display="none";
+	document.getElementById("SubKategoriDirujuk14").disabled=true;
+	k15.style.display="none";
+	document.getElementById("SubKategoriDirujuk15").disabled=true;
+	k16.style.display="none";
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
 
 	
   } else if (k==2) {
 	  document.getElementById("Personincharge").value = '5';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
+	document.getElementById("SubKategoriDirujuk1").disabled=true;
+	k1.style.display="none";
+	document.getElementById("SubKategoriDirujuk2").removeAttribute('disabled');
 	k2.style.display = "block";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
-	
+    k3.style.display="none";
+	document.getElementById("SubKategoriDirujuk3").disabled=true;
+	k4.style.display="none";
+	document.getElementById("SubKategoriDirujuk4").disabled=true;
+	k5.style.display="none";
+	document.getElementById("SubKategoriDirujuk5").disabled=true;
+	k6.style.display="none";
+	document.getElementById("SubKategoriDirujuk6").disabled=true;
+	k7.style.display="none";
+	document.getElementById("SubKategoriDirujuk7").disabled=true;
+	k8.style.display="none";
+	document.getElementById("SubKategoriDirujuk8").disabled=true;
+	k9.style.display="none";
+    document.getElementById("SubKategoriDirujuk9").disabled=true;
+	k10.style.display="none";
+	document.getElementById("SubKategoriDirujuk10").disabled=true;
+	k11.style.display="none";
+	document.getElementById("SubKategoriDirujuk11").disabled=true;
+	k12.style.display="none";
+	document.getElementById("SubKategoriDirujuk12").disabled=true;
+	k13.style.display="none";
+	document.getElementById("SubKategoriDirujuk13").disabled=true;
+	k14.style.display="none";
+	document.getElementById("SubKategoriDirujuk14").disabled=true;
+	k15.style.display="none";
+	document.getElementById("SubKategoriDirujuk15").disabled=true;
+	k16.style.display="none";
+	document.getElementById("SubKategoriDirujuk16").disabled=true;
 	
  } else if (k==3) {
 	  document.getElementById("Personincharge").value = '5';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
+	k1.style.display="none";
+	k2.style.display="none";
 	k3.style.display = "block";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	k4.style.display="none";
+	k5.style.display="none";
+	k6.style.display="none";
+	k7.style.display="none";
+	k8.style.display="none";
+	k9.style.display="none";
+	k10.style.display="none";
+	k11.style.display="none";
+	k12.style.display="none";
+	k13.style.display="none";
+	k14.style.display="none";
+	k15.style.display="none";
+	k16.style.display="none";
    
+   document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+   document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+   document.getElementById("SubKategoriDirujuk13").disabled=true;
+   document.getElementById("SubKategoriDirujuk14").disabled=true;
+   document.getElementById("SubKategoriDirujuk15").disabled=true;
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
 		
 		
 		
 		
 }else if (k==4) {
 	document.getElementById("Personincharge").value = '7';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
+	k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
 	k4.style.display = "block";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+k5.style.display="none";
+	k6.style.display="none";
+	k7.style.display="none";
+	k8.style.display="none";
+	k9.style.display="none";
+	k10.style.display="none";
+	k11.style.display="none";
+	k12.style.display="none";
+	k13.style.display="none";
+	k14.style.display="none";
+	k15.style.display="none";
+	k16.style.display="none";
+	
+	
+	document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+   document.getElementById("SubKategoriDirujuk13").disabled=true;
+   document.getElementById("SubKategoriDirujuk14").disabled=true;
+   document.getElementById("SubKategoriDirujuk15").disabled=true;
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
 	document.getElementById("BahagianDirujuks").value = "ENV";
+	
 }else if (k==5) {
 	document.getElementById("Personincharge").value = '7';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
+	k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
+	k4.style.display="none";
 	k5.style.display = "block";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	k6.style.display="none";
+	k7.style.display="none";
+	k8.style.display="none";
+	k9.style.display="none";
+	k10.style.display="none";
+	k11.style.display="none";
+	k12.style.display="none";
+	k13.style.display="none";
+	k14.style.display="none";
+	k15.style.display="none";
+	k16.style.display="none";
+	
+	
+   document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+   document.getElementById("SubKategoriDirujuk5").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+   document.getElementById("SubKategoriDirujuk13").disabled=true;
+   document.getElementById("SubKategoriDirujuk14").disabled=true;
+   document.getElementById("SubKategoriDirujuk15").disabled=true;
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
    
 }
 else if (k==6) {
 	document.getElementById("Personincharge").value = '7';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
+	k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
+	k4.style.display="none";
+	k5.style.display="none";
 	k6.style.display = "block";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+    k7.style.display="none";
+	k8.style.display="none";
+	k9.style.display="none";
+	k10.style.display="none";
+	k11.style.display="none";
+	k12.style.display="none";
+	k13.style.display="none";
+	k14.style.display="none";
+	k15.style.display="none";
+	k16.style.display="none";
+	
+	 document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+    document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+   document.getElementById("SubKategoriDirujuk13").disabled=true;
+   document.getElementById("SubKategoriDirujuk14").disabled=true;
+   document.getElementById("SubKategoriDirujuk15").disabled=true;
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
 	
 	}
 else if (k==7) {
 	document.getElementById("Personincharge").value = '8';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
+	k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
+	k4.style.display="none";
+	k5.style.display="none";
+	k6.style.display="none";
 	k7.style.display = "block";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	k8.style.display="none";
+	k9.style.display="none";
+	k10.style.display="none";
+	k11.style.display="none";
+	k12.style.display="none";
+	k13.style.display="none";
+	k14.style.display="none";
+	k15.style.display="none";
+	k16.style.display="none";
 	
-	
+   document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+   document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+   document.getElementById("SubKategoriDirujuk13").disabled=true;
+   document.getElementById("SubKategoriDirujuk14").disabled=true;
+   document.getElementById("SubKategoriDirujuk15").disabled=true;
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
 }else if (k==8) {
 	document.getElementById("Personincharge").value = '9';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
+	k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
+	k4.style.display="none";
+	k5.style.display="none";
+	k6.style.display="none";
+	k7.style.display="none";
 	k8.style.display = "block";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	k9.style.display="none";
+	k10.style.display="none";
+	k11.style.display="none";
+	k12.style.display="none";
+	k13.style.display="none";
+	k14.style.display="none";
+	k15.style.display="none";
+	k16.style.display="none";
+	
+	document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+   document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+   document.getElementById("SubKategoriDirujuk13").disabled=true;
+   document.getElementById("SubKategoriDirujuk14").disabled=true;
+   document.getElementById("SubKategoriDirujuk15").disabled=true;
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
 	
 	}else if (k==9) {
 		document.getElementById("Personincharge").value = '10';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
+		k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
+	k4.style.display="none";
+	k5.style.display="none";
+	k6.style.display="none";
+	k7.style.display="none";
+	k8.style.display = "none";
 	k9.style.display = "block";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	k10.style.display="none";
+	k11.style.display="none";
+	k12.style.display="none";
+	k13.style.display="none";
+	k14.style.display="none";
+	k15.style.display="none";
+	k16.style.display="none";
+	
+	
+   document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+   document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+   document.getElementById("SubKategoriDirujuk13").disabled=true;
+   document.getElementById("SubKategoriDirujuk14").disabled=true;
+   document.getElementById("SubKategoriDirujuk15").disabled=true;
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
+	
 	
 	}else if (k==10) {
 	document.getElementById("Personincharge").value = '11';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
+		k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
+	k4.style.display="none";
+	k5.style.display="none";
+	k6.style.display="none";
+	k7.style.display="none";
+	k8.style.display = "none";
+	k9.style.display = "none";
 	k10.style.display = "block";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	k11.style.display="none";
+	k12.style.display="none";
+	k13.style.display="none";
+	k14.style.display="none";
+	k15.style.display="none";
+	k16.style.display="none";
+	
+	document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+   document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+   document.getElementById("SubKategoriDirujuk13").disabled=true;
+   document.getElementById("SubKategoriDirujuk14").disabled=true;
+   document.getElementById("SubKategoriDirujuk15").disabled=true;
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
 	
 	}else if (k==11) {
 		document.getElementById("Personincharge").value = '12';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
+		k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
+	k4.style.display="none";
+	k5.style.display="none";
+	k6.style.display="none";
+	k7.style.display="none";
+	k8.style.display = "none";
+	k9.style.display = "none";
+	k10.style.display = "none";
 	k11.style.display = "block";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	k12.style.display="none";
+	k13.style.display="none";
+	k14.style.display="none";
+	k15.style.display="none";
+	k16.style.display="none";
+	
+	
+	document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+   document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+   document.getElementById("SubKategoriDirujuk13").disabled=true;
+   document.getElementById("SubKategoriDirujuk14").disabled=true;
+   document.getElementById("SubKategoriDirujuk15").disabled=true;
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
+	
+	
 	
 	}else if (k==12) {
 		document.getElementById("Personincharge").value = '9';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
+	k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
+	k4.style.display="none";
+	k5.style.display="none";
+	k6.style.display="none";
+	k7.style.display="none";
+	k8.style.display = "none";
+	k9.style.display = "none";
+	k10.style.display = "none";
+	k11.style.display = "none";
 	k12.style.display = "block";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	k13.style.display="none";
+	k14.style.display="none";
+	k15.style.display="none";
+	k16.style.display="none";
 	
+	document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+   document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk13").disabled=true;
+   document.getElementById("SubKategoriDirujuk14").disabled=true;
+   document.getElementById("SubKategoriDirujuk15").disabled=true;
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
 	}else if (k==13) {
-		document.getElementById("Personincharge").value = '13';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
+	k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
+	k4.style.display="none";
+	k5.style.display="none";
+	k6.style.display="none";
+	k7.style.display="none";
+	k8.style.display = "none";
+	k9.style.display = "none";
+	k10.style.display = "none";
+	k11.style.display = "none";
+	k12.style.display = "none";
 	k13.style.display = "block";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+		k14.style.display="none";
+	k15.style.display="none";
+	k16.style.display="none";
+	
+		document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+   document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+   document.getElementById("SubKategoriDirujuk13").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk14").disabled=true;
+   document.getElementById("SubKategoriDirujuk15").disabled=true;
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
 	
 	}else if (k==14) {
-		document.getElementById("Personincharge").value = '14';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
+			k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
+	k4.style.display="none";
+	k5.style.display="none";
+	k6.style.display="none";
+	k7.style.display="none";
+	k8.style.display = "none";
+	k9.style.display = "none";
+	k10.style.display = "none";
+	k11.style.display = "none";
+	k12.style.display = "none";
+	k13.style.display = "none";
 	k14.style.display = "block";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	k15.style.display="none";
+	k16.style.display="none";
+	
+	document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+   document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+   document.getElementById("SubKategoriDirujuk13").disabled=true;
+   document.getElementById("SubKategoriDirujuk14").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk15").disabled=true;
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
 	
 	}else if (k==15) {
-		document.getElementById("Personincharge").value = '14';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
+	k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
+	k4.style.display="none";
+	k5.style.display="none";
+	k6.style.display="none";
+	k7.style.display="none";
+	k8.style.display = "none";
+	k9.style.display = "none";
+	k10.style.display = "none";
+	k11.style.display = "none";
+	k12.style.display = "none";
+	k13.style.display = "none";
+	k14.style.display = "none";
 	k15.style.display = "block";
-	document.getElementById("SubKategoriDirujuk116").style.display="none";
+	k16.style.display = "none";
+	
+	document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+   document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+      document.getElementById("SubKategoriDirujuk13").disabled=true;
+      document.getElementById("SubKategoriDirujuk14").disabled=true;
+   document.getElementById("SubKategoriDirujuk15").removeAttribute('disabled');
+   document.getElementById("SubKategoriDirujuk16").disabled=true;
 	
 	}else if (k==16) {
-		document.getElementById("Personincharge").value = '15';
-	document.getElementById("SubKategoriDirujuk1").style.display="none";
-	document.getElementById("SubKategoriDirujuk2").style.display="none";
-	document.getElementById("SubKategoriDirujuk3").style.display="none";
-	document.getElementById("SubKategoriDirujuk4").style.display="none";
-	document.getElementById("SubKategoriDirujuk5").style.display="none";
-	document.getElementById("SubKategoriDirujuk6").style.display="none";
-	document.getElementById("SubKategoriDirujuk7").style.display="none";
-	document.getElementById("SubKategoriDirujuk8").style.display="none";
-	document.getElementById("SubKategoriDirujuk9").style.display="none";
-	document.getElementById("SubKategoriDirujuk10").style.display="none";
-	document.getElementById("SubKategoriDirujuk11").style.display="none";
-	document.getElementById("SubKategoriDirujuk12").style.display="none";
-	document.getElementById("SubKategoriDirujuk13").style.display="none";
-	document.getElementById("SubKategoriDirujuk14").style.display="none";
-	document.getElementById("SubKategoriDirujuk15").style.display="none";
+	k1.style.display="none";
+	k2.style.display="none";
+	k3.style.display="none";
+	k4.style.display="none";
+	k5.style.display="none";
+	k6.style.display="none";
+	k7.style.display="none";
+	k8.style.display = "none";
+	k9.style.display = "none";
+	k10.style.display = "none";
+	k11.style.display = "none";
+	k12.style.display = "none";
+	k13.style.display = "none";
+	k14.style.display = "none";
+	k15.style.display = "none";
 	k16.style.display = "block";
 	
+	document.getElementById("SubKategoriDirujuk1").disabled=true;
+   document.getElementById("SubKategoriDirujuk2").disabled=true;
+   document.getElementById("SubKategoriDirujuk3").disabled=true;
+   document.getElementById("SubKategoriDirujuk4").disabled=true;
+   document.getElementById("SubKategoriDirujuk5").disabled=true;
+   document.getElementById("SubKategoriDirujuk6").disabled=true;
+   document.getElementById("SubKategoriDirujuk7").disabled=true;
+   document.getElementById("SubKategoriDirujuk8").disabled=true;
+   document.getElementById("SubKategoriDirujuk9").disabled=true;
+   document.getElementById("SubKategoriDirujuk10").disabled=true;
+   document.getElementById("SubKategoriDirujuk11").disabled=true;
+   document.getElementById("SubKategoriDirujuk12").disabled=true;
+      document.getElementById("SubKategoriDirujuk13").disabled=true;
+      document.getElementById("SubKategoriDirujuk14").disabled=true;
+      document.getElementById("SubKategoriDirujuk15").disabled=true;
+	document.getElementById("SubKategoriDirujuk16").removeAttribute('disabled');
 	}}
 
 function CalculateDate(){
@@ -1065,84 +1356,84 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
     <td>Jenis:
     <td align="center" style="padding:10px"><select name="SubKategoriDirujuk" id="SubKategoriDirujuk1" style="width:100%">
                       <?php do { ?>
-              <option value=<?php echo $row_subkategori1['ID']; ?>><?php echo $row_subkategori1['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori1['NamaSub']; ?>"><?php echo $row_subkategori1['NamaSub']; ?> </option>
               <?php } while($row_subkategori1 = mysql_fetch_assoc($subkategori1)); ?></select>
               
              
              <select name="SubKategoriDirujuk" id="SubKategoriDirujuk2" style="display:none;width:100%">
               <?php do { ?>
-              <option value=<?php echo $row_subkategori2['ID']; ?>><?php echo $row_subkategori2['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori2['NamaSub']; ?>"><?php echo $row_subkategori2['NamaSub']; ?> </option>
               <?php } while($row_subkategori2 = mysql_fetch_assoc($subkategori2)); ?></select>
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk3" style="display:none;width:100%">
                 <?php do { ?>
-              <option value=<?php echo $row_subkategori3['ID']; ?>><?php echo $row_subkategori3['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori3['NamaSub']; ?>"><?php echo $row_subkategori3['NamaSub']; ?> </option>
               <?php } while($row_subkategori3 = mysql_fetch_assoc($subkategori3)); ?></select>
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk4" style="display:none;width:100%">
                 <?php do { ?>
-              <option value=<?php echo $row_subkategori4['ID']; ?>><?php echo $row_subkategori4['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori4['NamaSub']; ?>"><?php echo $row_subkategori4['NamaSub']; ?> </option>
               <?php } while($row_subkategori4 = mysql_fetch_assoc($subkategori4)); ?></select>
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk5" style="display:none;width:100%">
                 <?php do { ?>
-              <option value=<?php echo $row_subkategori5['ID']; ?>><?php echo $row_subkategori5['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori5['NamaSub']; ?>"><?php echo $row_subkategori5['NamaSub']; ?> </option>
               <?php } while($row_subkategori5 = mysql_fetch_assoc($subkategori5)); ?></select>
               
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk6" style="display:none;width:100%">
                 <?php do { ?>
-              <option value=<?php echo $row_subkategori6['ID']; ?>><?php echo $row_subkategori6['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori6['NamaSub']; ?>"><?php echo $row_subkategori6['NamaSub']; ?> </option>
               <?php } while($row_subkategori6 = mysql_fetch_assoc($subkategori6)); ?></select>
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk7" style="display:none;width:100%">
                <?php do { ?>
-              <option value=<?php echo $row_subkategori7['ID']; ?>><?php echo $row_subkategori7['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori7['NamaSub']; ?>"><?php echo $row_subkategori7['NamaSub']; ?> </option>
               <?php } while($row_subkategori7 = mysql_fetch_assoc($subkategori7)); ?></select>
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk8" style="display:none;width:100%">
                 <?php do { ?>
-              <option value=<?php echo $row_subkategori8['ID']; ?>><?php echo $row_subkategori8['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori8['NamaSub']; ?>"><?php echo $row_subkategori8['NamaSub']; ?> </option>
               <?php } while($row_subkategori8 = mysql_fetch_assoc($subkategori8)); ?></select>
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk9" style="display:none;width:100%">
                 <?php do { ?>
-              <option value=<?php echo $row_subkategori9['ID']; ?>><?php echo $row_subkategori9['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori9['NamaSub']; ?>"><?php echo $row_subkategori9['NamaSub']; ?> </option>
               <?php } while($row_subkategori9 = mysql_fetch_assoc($subkategori9)); ?></select>
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk10" style="display:none;width:100%">
                   <?php do { ?>
-              <option value=<?php echo $row_subkategori10['ID']; ?>><?php echo $row_subkategori10['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori10['NamaSub']; ?>"><?php echo $row_subkategori10['NamaSub']; ?> </option>
               <?php } while($row_subkategori10 = mysql_fetch_assoc($subkategori10)); ?></select>
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk11" style="display:none;width:100%">
                   <?php do { ?>
-              <option value=<?php echo $row_subkategori11['ID']; ?>><?php echo $row_subkategori11['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori11['NamaSub']; ?>"><?php echo $row_subkategori11['NamaSub']; ?> </option>
               <?php } while($row_subkategori11 = mysql_fetch_assoc($subkategori11)); ?></select>
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk12" style="display:none;width:100%">
                  <?php do { ?>
-              <option value=<?php echo $row_subkategori12['ID']; ?>><?php echo $row_subkategori12['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori12['NamaSub']; ?>"><?php echo $row_subkategori12['NamaSub']; ?> </option>
               <?php } while($row_subkategori12 = mysql_fetch_assoc($subkategori12)); ?></select>
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk13" style="display:none;width:100%">
                <?php do { ?>
-              <option value=<?php echo $row_subkategori13['ID']; ?>><?php echo $row_subkategori13['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori13['NamaSub']; ?>"><?php echo $row_subkategori13['NamaSub']; ?> </option>
               <?php } while($row_subkategori13 = mysql_fetch_assoc($subkategori13)); ?></select>
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk14" style="display:none;width:100%">
                  <?php do { ?>
-              <option value=<?php echo $row_subkategori14['ID']; ?>><?php echo $row_subkategori14['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori14['NamaSub']; ?>"><?php echo $row_subkategori14['NamaSub']; ?> </option>
               <?php } while($row_subkategori14 = mysql_fetch_assoc($subkategori14)); ?></select>
              
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk15" style="display:none;width:100%">
                <?php do { ?>
-              <option value=<?php echo $row_subkategori15['ID']; ?>><?php echo $row_subkategori15['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori15['NamaSub']; ?>"><?php echo $row_subkategori15['NamaSub']; ?> </option>
               <?php } while($row_subkategori15 = mysql_fetch_assoc($subkategori15)); ?></select>
               
                <select name="SubKategoriDirujuk" id="SubKategoriDirujuk16" style="display:none;width:100%">
                <?php do { ?>
-              <option value=<?php echo $row_subkategori16['ID']; ?>><?php echo $row_subkategori16['NamaSub']; ?> </option>
+              <option value="<?php echo $row_subkategori16['NamaSub']; ?>"><?php echo $row_subkategori16['NamaSub']; ?> </option>
               <?php } while($row_subkategori16 = mysql_fetch_assoc($subkategori16)); ?></select>
                
               </td>
@@ -1172,37 +1463,35 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
 </tr>
     <tr >
       <td><label>Kawasan Aduan:</label></td>
-      <td align="center" style="padding:10px"><select name="kawasanAduan" id="kawasanAduan1" style="width:100%" >
+      <td align="center" style="padding:10px"><select name="kawasanAduan" id="kawasanAduan1" style="width:100%"  >
                       <?php do { ?>
     <option value="<?php echo $row_DunKawasan1['NamaKawasan']; ?>"><?php echo $row_DunKawasan1['NamaKawasan']; ?></option>
               <?php } while ($row_DunKawasan1 = mysql_fetch_assoc($DunKawasan1)); ?>             
         </select>
         
-        
-        
-        <select name="kawasanAduan" id="kawasanAduan2" style="display:none">
+         <select name="kawasanAduan" id="kawasanAduan2" style="display:none;width:100%" >
                       <?php do { ?>
     <option value="<?php echo $row_DunKawasan2['NamaKawasan']; ?>"><?php echo $row_DunKawasan2['NamaKawasan']; ?></option>
               <?php } while ($row_DunKawasan2 = mysql_fetch_assoc($DunKawasan2)); ?>             
         </select>
         
-          <select name="kawasanAduan" id="kawasanAduan3" style="display:none">
+          <select name="kawasanAduan" id="kawasanAduan3" style="display:none;width:100%" >
                       <?php do { ?>
     <option value="<?php echo $row_DunKawasan3['NamaKawasan']; ?>"><?php echo $row_DunKawasan3['NamaKawasan']; ?></option>
               <?php } while ($row_DunKawasan3 = mysql_fetch_assoc($DunKawasan3)); ?>             
         </select>
-          <select name="kawasanAduan" id="kawasanAduan4" style="display:none">
+          <select name="kawasanAduan" id="kawasanAduan4" style="display:none;width:100%"">
                       <?php do { ?>
     <option value="<?php echo $row_DunKawasan4['NamaKawasan']; ?>"><?php echo $row_DunKawasan4['NamaKawasan']; ?></option>
               <?php } while ($row_DunKawasan4 = mysql_fetch_assoc($DunKawasan4)); ?>             
         </select>
-          <select name="kawasanAduan" id="kawasanAduan5" style="display:none">
+          <select name="kawasanAduan" id="kawasanAduan5" style="display:none;width:100%" >
                       <?php do { ?>
     <option value="<?php echo $row_DunKawasan5['NamaKawasan']; ?>"><?php echo $row_DunKawasan5['NamaKawasan']; ?></option>
               <?php } while ($row_DunKawasan5 = mysql_fetch_assoc($DunKawasan5)); ?>             
         </select>
        
-        
+       
         
         
         
