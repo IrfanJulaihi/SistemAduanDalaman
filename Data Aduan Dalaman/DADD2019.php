@@ -468,9 +468,15 @@ $totalRows_TagUser = mysql_num_rows($TagUser);
  
 }
 
-
+ #map {
+        height: 400px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
 
 </style>
+
+
+
 <script>
 
 function showKawasan() {  
@@ -1497,7 +1503,11 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
         
         
         </td>
-     
+        <tr>
+        <td>Peta Lokasi:
+        <td> <div id="map"></div>
+</div>
+     <tr>
     
   
       <td><label>Maklumat:</label></td>
@@ -1512,22 +1522,32 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
           
           </tr>-->
       
-      </td>
+      
     </tr>
   
   
     <tr >
       <td><label>Saluran</label></td>
-      <td style="padding:10px"><select name="SaluranAduan" id="SaluranAduan" style="width: 100%" >
-      <option value="Staff Dalaman">Staff Dalaman
-      </option>
-       <option value="Pegawai Kawasan">Pegawai Kawasan
-      </option>
-       <option value="CCTV">CCTV
-      </option>
-       <option value="Skuad Ronda Bantu">Skuad Ronda Bantu
-      </option>
-      </select></td>
+      <td style="padding:10px">
+    <input type="radio" id="contactChoice1"
+     name="SaluranAduan" value="Staff Dalaman">
+    <label for="contactChoice1">Staff Dalaman</label>
+
+    <input type="radio" id="contactChoice2"
+     name="SaluranAduan" value="Pegawai Kawasan">
+    <label for="contactChoice2">Pegawai Kawasan</label>
+
+    <input type="radio" id="contactChoice3"
+     name="SaluranAduan" value="CCTV">
+    <label for="contactChoice3">CCTV</label>
+    
+     <input type="radio" id="contactChoice1"
+     name="SaluranAduan" value="Skuad Ronda Bantu">
+    <label for="contactChoice1">Skuad Ronda Bantu</label>
+
+
+      
+      </td>
       
     </tr>
   
@@ -1547,7 +1567,21 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
 
 </table>
 </form>	
-
+<script>
+// Initialize and add the map
+function initMap() {
+  // The location of Uluru
+  var uluru = {lat: -25.344, lng: 131.036};
+  // The map, centered at Uluru
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 4, center: uluru});
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({position: uluru, map: map});
+}
+    </script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+    </script>
 </body>
 </html>
 <?php

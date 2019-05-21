@@ -92,6 +92,14 @@ INNER JOIN subkategoriaduan
 ON subkategoriaduan.ID=aduan.SubCategory where NoRujukan=%s",GetSQLValueString($colname_ViewCase,"text"));
 $SubKategoriAduan= mysql_query($query_MergeSubkategoriAduan, $Connection1) or die(mysql_error());
 $row_SubkategoriAduan = mysql_fetch_assoc($SubKategoriAduan);
+
+//SQL to merge aduan with pegawai dirujuk
+mysql_select_db($database_Connection1, $Connection1);
+$query_PegawaiDirujuk = sprintf("SELECT * from aduan INNER JOIN useraccount ON useraccount.ID = aduan.PIC where PIC =%s", GetSQLValueString($row_UserAccount['ID'], "text"));
+$PegawaiDirujuk = mysql_query($query_PegawaiDirujuk, $Connection1) or die(mysql_error());
+$row_PegawaiDirujuk = mysql_fetch_assoc($PegawaiDirujuk);
+
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -100,6 +108,16 @@ $row_SubkategoriAduan = mysql_fetch_assoc($SubKategoriAduan);
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>View Case</title>
 <link href="../css/tableView.css" rel="stylesheet" type="text/css" >
+<script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
+<script type="text/javascript" src="../Admin/assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="../Admin/assets/js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="../Admin/assets/js/bootstrap-table.js"></script>
+<link href="../Admin/assets/css/fresh-bootstrap-table.css" rel="stylesheet" />
+<link  rel="stylesheet" href="../css/styles.css" rel="stylesheet" type="text/css" >
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../Admin/assets/css/menubar.css">
+
 <script>
 function addDirujuk(){
 	
@@ -117,6 +135,37 @@ function addDirujuk(){
 
 }
 </script>
+
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("Jul 12, 2019 17:00:25").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+</script>
 </head>
 
 <body>
@@ -125,6 +174,29 @@ function addDirujuk(){
 <?php
 mysql_free_result($ViewCase);
 ?>
+<div class="topnav" id="myTopnav">
+  <a style=" background-color:#0FED56;">Sistem Aduan Dalaman DBKU</a>
+  <a href="DADD2019.php" >Home</a>
+
+  
+  <div class="dropdown">
+    <button class="dropbtn">Aduan Management 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+    <a href="#" onclick="showModal()">View Aduan
+</a>
+     
+  
+    </div>
+  </div> 
+  <a href="#about">About</a>
+    <a href="<?php echo $logoutAction ?>" class="dropbtn">Logout</a>
+  <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+</div>
+
+
+
 <label><center><?php echo $row_ViewCase['NoRujukan'] ?></center></label><br>
 
 <table id="myTable" border="1" align="center" style="width: 400px" cellspacing="3" class="paleBlueRows">
@@ -165,7 +237,7 @@ mysql_free_result($ViewCase);
   <tr>
 	  
 	  <td>Sub Kategori Aduan </td>
-    <td style="color: #4E4E4E"><?php echo $row_SubkategoriAduan['NamaSub']?></td>
+    <td style="color: #4E4E4E"><?php echo $row_ViewAduan['SubCategory']?></td>
 	  
   </tr>
    <tr>
@@ -191,20 +263,14 @@ mysql_free_result($ViewCase);
   <tr>
  
     <td>Status Aduan </td>
-    <td><?php echo $row_ViewCase['StatusAduan'] ?>    <select name="CaseStatus" selected="Choose Month" onchange="location = this.value;">
-     
-      <option value="Searchbydate.php?monthsearch=1">Acknowledged</option>
-      <option value="Searchbydate.php?monthsearch=2">In Progress</option>
-  <option value="Searchbydate.php?monthsearch=2">Completed</option>
-    </select></td>
+    <td><?php echo $row_ViewCase['StatusAduan'] ?>    
+   
+    <input type="button" value="Proceed">
+</td>
   </tr>
-    <tr>
- 
-    <td>Pegawai dirujuk </td>
-    <td>
-     <?php echo $row_Recordset3['PegawaiDirujuk'] ?>   
-    </td>
-  </tr>
+   <tr>
+   <td>Pegawai dirujuk
+   <td><?php echo $row_PegawaiDirujuk['Name'] ?>
     <tr>
  
     <td>Tindakan dirujuk </td>

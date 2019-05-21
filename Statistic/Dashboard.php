@@ -375,7 +375,7 @@ if($row_jumlahDunN8['COUNT(*)']==0){
 mysql_select_db($database_Connection1, $Connection1);
 $BahagianAduan;
 $query_bahagianAduan= "SELECT *,COUNT(*) 
-FROM aduan GROUP BY BahagianAduan";
+FROM aduan ";
 $bahagianAduan = mysql_query($query_bahagianAduan, $Connection1) or die(mysql_error());
 $row_bahagianAduan= mysql_fetch_assoc($bahagianAduan);
 
@@ -384,23 +384,23 @@ $totalRows_bahagianAduan = mysql_num_rows($bahagianAduan);
 mysql_select_db($database_Connection1, $Connection1);
 $BahagianAduan2;
 $query_bahagianAduan2= "SELECT *,COUNT(*) 
-FROM aduan GROUP BY BahagianAduan";
+FROM aduan ";
 $bahagianAduan2 = mysql_query($query_bahagianAduan2, $Connection1) or die(mysql_error());
 $row_bahagianAduan2= mysql_fetch_assoc($bahagianAduan2);
-$totalRows_bahagianAduan2 = mysql_num_rows($bahagianAduan2);
+$totalRows_bahagianAduan2 = mysql_num_rows($bahagianAduan2);//
 
 
 
 //Query to count for kes penyelesaian bahagian dirujuk
 mysql_select_db($database_Connection1, $Connection1);
-$query_AduanSelesai= "SELECT *,COUNT(*) FROM aduan WHERE CaseCompletedInTime='1'  GROUP BY BahagianAduan";
+$query_AduanSelesai= "SELECT *,COUNT(*) FROM aduan WHERE CaseCompletedInTime='1' ";
 $AduanSelesai = mysql_query($query_AduanSelesai, $Connection1) or die(mysql_error());
 $row_AduanSelesai= mysql_fetch_assoc($AduanSelesai);
 $totalrows_AduanSelesai=mysql_num_rows($AduanSelesai);
 
 //Query to count for kes tidak selesai bahagian dirujuk
 mysql_select_db($database_Connection1, $Connection1);
-$query_tidakSelesai= "SELECT *,COUNT(*) FROM aduan WHERE CaseCompletedInTime='0' GROUP BY BahagianAduan";
+$query_tidakSelesai= "SELECT *,COUNT(*) FROM aduan WHERE CaseCompletedInTime='0' ";
 $AduanTidakSelesai = mysql_query($query_tidakSelesai, $Connection1) or die(mysql_error());
 $row_AduanTidakSelesai= mysql_fetch_assoc($AduanTidakSelesai);
 
@@ -802,7 +802,7 @@ document.getElementById("demo").innerHTML = x;
     <?php do {  ?>
       <tr>
         <td><?php echo $no++ ?></td>
-        <td><?php echo $row_bahagianAduan['BahagianAduan'] ?></td>
+        <td><?php echo $row_bahagianAduan['BahagianAduan']; ?></td>
         <td><div align="center"><?php echo $row_bahagianAduan['COUNT(*)'];
 		$bahagianDirujuk = array();
 		$bahagianDirujuk[] = $row_bahagianAduan['COUNT(*)'];

@@ -252,13 +252,14 @@ function myFunction() {
       <td> <a href="ViewCase.php?NoRujukan=<?php echo $row_ViewAduan['NoRujukan'];?>"><?php echo $row_ViewAduan['NoRujukan'];?></a></td>
       
         <td><?php echo $row_kategoriAduan['NamaAduan']; ?></td>
-        <td></td>
+        <td><?php echo $row_ViewAduan['SubCategory'];?> </td>
         <td><?php echo $row_ViewAduan['KawasanAduan']; ?></td>
         <td><?php echo $row_ViewAduan['MaklumatAduan']; ?></td>
         
       
         <td><?php echo $row_ViewAduan['StatusAduan']; ?></td>
-        <td><?php echo $row_ViewAduan['TimeSubmit']; ?></td>
+        <td><?php echo date("d/m/Y  ", strtotime($row_ViewAduan['TimeSubmit']) ); ?><br>
+        <?php echo date("h:i:sa  ", strtotime($row_ViewAduan['TimeSubmit']) ); ?></td>
         
      
     </tr>
